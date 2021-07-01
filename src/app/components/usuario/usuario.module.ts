@@ -10,7 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { UsuarioComponent } from './usuario.component';
 import { UsuarioService } from './usuario.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatRadioModule } from '@angular/material/radio';
+import { MatRadioModule, MAT_RADIO_DEFAULT_OPTIONS } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { CpfPipe } from 'src/app/pipes/cpf.pipe';
 
@@ -36,7 +36,11 @@ import { CpfPipe } from 'src/app/pipes/cpf.pipe';
     UsuarioComponent
   ],
   providers: [
-    UsuarioService
+    UsuarioService,
+    {
+      provide: MAT_RADIO_DEFAULT_OPTIONS,
+      useValue: { color: 'primary' },
+    }
   ],
 })
 export class UsuarioModule { }

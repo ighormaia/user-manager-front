@@ -11,7 +11,7 @@
   <button mat-raised-button color="primary" [disabled]="desativarBotaoSalvar" (click)="adicionarCargo()">Adicionar</button>
 </ng-container>
 <ng-container *ngIf="ehEdicao">
-  <button mat-raised-button color="primary" class="editar" (click)="alterarCargo()">Confirmar Edição</button>
+  <button mat-raised-button color="primary" class="editar" [disabled]="desativarBotaoSalvar" (click)="alterarCargo()">Confirmar Edição</button>
   <button mat-raised-button color="warn" (click)="cancelar()">Cancelar Edição</button>
 </ng-container>
 

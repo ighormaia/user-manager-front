@@ -40,7 +40,10 @@ export class UsuarioComponent implements OnInit, OnDestroy {
       ],
       cpf: [
         '',
-        Validators.required
+        [
+          Validators.required,
+          Validators.minLength(11)
+        ]
       ],
       dataNascimento: undefined,
       sexo: '',
@@ -74,7 +77,7 @@ export class UsuarioComponent implements OnInit, OnDestroy {
     });
   }
 
-  private listarUsuarios() {
+  listarUsuarios() {
     this.subscription.add(
       this.usuarioService
         .getUsuarios()

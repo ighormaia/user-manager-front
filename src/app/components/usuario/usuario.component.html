@@ -8,11 +8,11 @@
 
   <mat-form-field class="form-full-width" appearance="fill">
     <mat-label>CPF</mat-label>
-    <input matInput placeholder="Ex. 12322600610" formControlName="cpf" maxlength="11" required>
+    <input matInput placeholder="Ex. 12223606610" formControlName="cpf" maxlength="11" required>
   </mat-form-field>
 
   <mat-form-field appearance="fill" class="input">
-    <mat-label>Selecione a Data de Nascimento</mat-label>
+    <mat-label>Selecione a Data Nascimento</mat-label>
     <input matInput formControlName="dataNascimento" [matDatepicker]="picker">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
@@ -46,7 +46,7 @@
   <button mat-raised-button color="primary" [disabled]="desativarBotaoSalvar" (click)="adicionarUsuario()">Adicionar</button>
 </ng-container>
 <ng-container *ngIf="ehEdicao">
-  <button mat-raised-button color="primary" class="editar" (click)="alterarUsuario()">Confirmar Edição</button>
+  <button mat-raised-button color="primary" class="editar" [disabled]="desativarBotaoSalvar" (click)="alterarUsuario()">Confirmar Edição</button>
   <button mat-raised-button color="warn" (click)="cancelar()">Cancelar Edição</button>
 </ng-container>
 
