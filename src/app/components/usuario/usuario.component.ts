@@ -8,6 +8,7 @@ import { GeneroEnum } from '../../shared/model/genero-enum';
 import { PerfilData } from '../perfil/model/perfil-data';
 import { UsuarioData } from './model/usuario-data';
 import { UsuarioService } from './usuario.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'usuario-component',
@@ -110,8 +111,8 @@ export class UsuarioComponent implements OnInit, OnDestroy {
             this.listarUsuarios();
             this.form.reset();
           },
-          err => {
-            this.exibirNotificacaoErro(err.message);
+          (err: HttpErrorResponse) => {
+            this.exibirNotificacaoErro(err.error.message);
           }
         )
     )
@@ -130,8 +131,8 @@ export class UsuarioComponent implements OnInit, OnDestroy {
             this.usuarioSendoEditado = new UsuarioData();
             this.form.reset();
           },
-          err => {
-            this.exibirNotificacaoErro(err.message);
+          (err: HttpErrorResponse) => {
+            this.exibirNotificacaoErro(err.error.message);
           }
         )
     )
@@ -145,8 +146,8 @@ export class UsuarioComponent implements OnInit, OnDestroy {
           () => {
             this.listarUsuarios();
           },
-          err => {
-            this.exibirNotificacaoErro(err.message);
+          (err: HttpErrorResponse) => {
+            this.exibirNotificacaoErro(err.error.message);
           }
         )
     )

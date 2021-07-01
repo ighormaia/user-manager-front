@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -82,8 +83,8 @@ export class PerfilComponent implements OnInit, OnDestroy {
             this.listarPerfis();
             this.form.reset();
           },
-          err => {
-            this.exibirNotificacaoErro(err.message);
+          (err: HttpErrorResponse) => {
+            this.exibirNotificacaoErro(err.error.message);
           }
         )
     )
@@ -103,8 +104,8 @@ export class PerfilComponent implements OnInit, OnDestroy {
             this.perfilSendoEditado = new PerfilData();
             this.form.reset();
           },
-          err => {
-            this.exibirNotificacaoErro(err.message);
+          (err: HttpErrorResponse) => {
+            this.exibirNotificacaoErro(err.error.message);
           }
         )
     )
@@ -118,8 +119,8 @@ export class PerfilComponent implements OnInit, OnDestroy {
           () => {
             this.listarPerfis();
           },
-          err => {
-            this.exibirNotificacaoErro(err.message);
+          (err: HttpErrorResponse) => {
+            this.exibirNotificacaoErro(err.error.message);
           }
         )
     )
