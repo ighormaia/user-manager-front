@@ -1,0 +1,34 @@
+<h1>Cargos</h1>
+
+<form [formGroup]="form" class="example-form">
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Nome</mat-label>
+    <input matInput placeholder="Ex. Pizza" formControlName="nome">
+  </mat-form-field>
+</form>
+
+<ng-container *ngIf="!ehEdicao">
+  <button mat-raised-button color="primary" (click)="adicionarCargo()">Adicionar</button>
+</ng-container>
+<ng-container *ngIf="ehEdicao">
+  <button mat-raised-button color="primary" (click)="alterarCargo()">Confirmar Edição</button>
+</ng-container>
+
+<table mat-table [dataSource]="listaCargos" class="cargos-table mat-elevation-z8">
+
+  <ng-container matColumnDef="nome">
+    <th mat-header-cell *matHeaderCellDef> Nome </th>
+    <td mat-cell *matCellDef="let cargo">{{ cargo.nome }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="ações">
+    <th mat-header-cell *matHeaderCellDef> Ações </th>
+    <td mat-cell *matCellDef="let cargo">
+      <button mat-raised-button color="basic" [disabled]="ehEdicao" (click)="editarCargo(cargo)">Editar</button>
+      <button mat-raised-button color="warn" [disabled]="ehEdicao" (click)="apagarCargo(cargo.idCargo)">Apagar</button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
