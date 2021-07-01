@@ -1,7 +1,20 @@
-<mat-toolbar>
+<mat-toolbar color="primary">
   <span>Gerenciamento de Usuários</span>
 </mat-toolbar>
 
 <div class="container">
-  <cargo-component></cargo-component>
+
+  <div class="card-container">
+    <mat-card class="card card-half-size">
+      <cargo-component (onListarCargos)="onListarCargos($event)"></cargo-component>
+    </mat-card>
+
+    <mat-card class="card card-half-size">
+      <perfil-component (onListarPerfis)="onListarPerfis($event)"></perfil-component>
+    </mat-card>
+  </div>
+
+  <mat-card class="card">
+    <usuario-component [listaCargos]="listaCargos" [listaPerfis]="listaPerfis"></usuario-component>
+  </mat-card>
 </div>

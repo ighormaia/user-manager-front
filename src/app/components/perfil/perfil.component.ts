@@ -3,30 +3,30 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { SubscriptionManager } from 'src/app/shared/subscriptionManager';
-import { CargoService } from './cargo.service';
-import { CargoData } from './model/cargo-data';
+import { PerfilData } from './model/perfil-data';
+import { PerfilService } from './perfil.service';
 
 @Component({
-  selector: 'cargo-component',
-  templateUrl: './cargo.component.html',
-  styleUrls: ['./cargo.component.scss'],
+  selector: 'perfil-component',
+  templateUrl: './perfil.component.html',
+  styleUrls: ['./perfil.component.scss'],
 })
 
-export class CargoComponent implements OnInit, OnDestroy {
+export class PerfilComponent implements OnInit, OnDestroy {
 
   private subscription = new SubscriptionManager<Subscription>();
 
   @Output()
-  onListarCargos = new EventEmitter<CargoData[]>();
+  onListarPerfis = new EventEmitter<PerfilData[]>();
 
-  cargoSendoEditado: CargoData = new CargoData;
+  perfilSendoEditado: PerfilData = new PerfilData;
   form: FormGroup;
   displayedColumns: string[] = ['nome', 'ações'];
-  listaCargos: CargoData[] = [];
+  listaPerfis: PerfilData[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
-    private cargoService: CargoService,
+    private perfilService: PerfilService,
     private notificacaoService: MatSnackBar
   ) {
     this.form = this.formBuilder.group({
@@ -38,7 +38,7 @@ export class CargoComponent implements OnInit, OnDestroy {
   }
 
   get ehEdicao(): boolean {
-    return this.cargoSendoEditado.idCargo !== undefined ? true : false;
+    return this.perfilSendoEditado.idPerfil !== undefined ? true : false;
   }
 
   get desativarBotaoSalvar(): boolean {
@@ -46,7 +46,7 @@ export class CargoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.listarCargos();
+    this.listarPerfis();
   }
 
   ngOnDestroy() {
@@ -59,27 +59,27 @@ export class CargoComponent implements OnInit, OnDestroy {
     });
   }
 
-  private listarCargos() {
+  private listarPerfis() {
     this.subscription.add(
-      this.cargoService
-        .getCargos()
+      this.perfilService
+        .getPerfis()
         .subscribe(resp => {
-          this.listaCargos = resp;
-          this.onListarCargos.emit(resp);
+          this.listaPerfis = resp;
+          this.onListarPerfis.emit(resp);
         })
     )
   }
 
-  adicionarCargo() {
-    let cargo = new CargoData();
-    cargo.nome = this.form.get('nome')?.value;
+  adicionarPerfil() {
+    let perfil = new PerfilData();
+    perfil.nome = this.form.get('nome')?.value;
 
     this.subscription.add(
-      this.cargoService
-        .postCargo(cargo)
+      this.perfilService
+        .postPerfil(perfil)
         .subscribe(
           () => {
-            this.listarCargos();
+            this.listarPerfis();
             this.form.reset();
           },
           err => {
@@ -89,18 +89,18 @@ export class CargoComponent implements OnInit, OnDestroy {
     )
   }
 
-  alterarCargo() {
-    let cargo = new CargoData();
-    cargo.idCargo = this.cargoSendoEditado.idCargo;
-    cargo.nome = this.form.get('nome')?.value;
+  alterarPerfil() {
+    let perfil = new PerfilData();
+    perfil.idPerfil = this.perfilSendoEditado.idPerfil;
+    perfil.nome = this.form.get('nome')?.value;
 
     this.subscription.add(
-      this.cargoService
-        .putCargo(cargo)
+      this.perfilService
+        .putPerfil(perfil)
         .subscribe(
           () => {
-            this.listarCargos();
-            this.cargoSendoEditado = new CargoData();
+            this.listarPerfis();
+            this.perfilSendoEditado = new PerfilData();
           },
           err => {
             this.exibirNotificacaoErro(err.message);
@@ -109,13 +109,13 @@ export class CargoComponent implements OnInit, OnDestroy {
     )
   }
 
-  apagarCargo(id: number) {
+  apagarPerfil(id: number) {
     this.subscription.add(
-      this.cargoService
-        .deleteCargo(id)
+      this.perfilService
+        .deletePerfil(id)
         .subscribe(
           () => {
-            this.listarCargos();
+            this.listarPerfis();
           },
           err => {
             this.exibirNotificacaoErro(err.message);
@@ -124,14 +124,14 @@ export class CargoComponent implements OnInit, OnDestroy {
     )
   }
 
-  editarCargo(cargo: CargoData) {
-    this.cargoSendoEditado = cargo;
-    this.form.get('nome')?.setValue(cargo.nome);
+  editarPerfil(perfil: PerfilData) {
+    this.perfilSendoEditado = perfil;
+    this.form.get('nome')?.setValue(perfil.nome);
   }
 
   cancelar() {
     this.form.reset();
-    this.cargoSendoEditado = new CargoData();
+    this.perfilSendoEditado = new PerfilData();
   }
 
 }

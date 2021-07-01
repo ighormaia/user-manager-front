@@ -1,0 +1,115 @@
+<h1>Usuarios</h1>
+
+<form [formGroup]="form" class="form">
+  <mat-form-field class="form-full-width" appearance="fill">
+    <mat-label>Nome</mat-label>
+    <input matInput placeholder="Ex. Pizza" formControlName="nome" required>
+  </mat-form-field>
+
+  <mat-form-field class="form-full-width" appearance="fill">
+    <mat-label>CPF</mat-label>
+    <input matInput placeholder="Ex. Pizza" formControlName="cpf" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Selecione a Data de Nascimento</mat-label>
+    <input matInput formControlName="dataNascimento" [matDatepicker]="picker">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-radio-group formControlName="sexo" aria-label="Selecione o sexo">
+    <mat-radio-button [value]="generoEnum.masculino">Masculino</mat-radio-button>
+    <mat-radio-button [value]="generoEnum.feminino">Feminino</mat-radio-button>
+  </mat-radio-group>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Selecione o Cargo</mat-label>
+    <mat-select formControlName="cargo" required>
+      <mat-option *ngFor="let cargo of listaCargos" [value]="cargo.idCargo" >
+        {{ cargo.nome }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Selecione os Perfis</mat-label>
+    <mat-select formControlName="perfis" multiple [compareWith]="compararObjetoSelect">
+      <mat-option *ngFor="let perfil of listaPerfis" [value]="perfil">
+        {{ perfil.nome }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>
+
+<ng-container *ngIf="!ehEdicao">
+  <button mat-raised-button color="primary" [disabled]="desativarBotaoSalvar" (click)="adicionarUsuario()">Adicionar</button>
+</ng-container>
+<ng-container *ngIf="ehEdicao">
+  <button mat-raised-button color="primary" (click)="alterarUsuario()">Confirmar Edição</button>
+  <button mat-raised-button color="warn" (click)="cancelar()">Cancelar Edição</button>
+</ng-container>
+
+<table mat-table [dataSource]="listaUsuarios" class="usuarios-table mat-elevation-z1">
+  <ng-container matColumnDef="nome">
+    <th mat-header-cell *matHeaderCellDef> Nome </th>
+    <td mat-cell *matCellDef="let usuario">{{ usuario.nome }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="cpf">
+    <th mat-header-cell *matHeaderCellDef> CPF </th>
+    <td mat-cell *matCellDef="let usuario">{{ usuario.cpf | cpf }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="sexo">
+    <th mat-header-cell *matHeaderCellDef> Sexo </th>
+    <td mat-cell *matCellDef="let usuario">
+      <ng-container *ngIf="usuario.sexo === generoEnum.masculino">
+        {{ 'Masculino' }}
+      </ng-container>
+      <ng-container *ngIf="usuario.sexo === generoEnum.feminino">
+        {{ 'Feminino' }}
+      </ng-container>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dataNascimento">
+    <th mat-header-cell *matHeaderCellDef> Data Nascimento </th>
+    <td mat-cell *matCellDef="let usuario">{{ usuario.dataNascimento | date: 'dd/MM/yyyy' }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="dataCadastro">
+    <th mat-header-cell *matHeaderCellDef> Data Cadastro </th>
+    <td mat-cell *matCellDef="let usuario">{{ usuario.dataCadastro | date: 'dd/MM/yyyy' }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="cargo">
+    <th mat-header-cell *matHeaderCellDef> Cargo </th>
+    <td mat-cell *matCellDef="let usuario">{{ usuario.cargo.nome }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="perfis">
+    <th mat-header-cell *matHeaderCellDef> Perfis </th>
+    <td mat-cell *matCellDef="let usuario">
+      <ng-container *ngFor="let perfil of usuario.perfis; index as i">
+        <ng-container *ngIf="i+1 === usuario.perfis.length">
+          {{ perfil.nome }}
+        </ng-container>
+        <ng-container *ngIf="i+1 !== usuario.perfis.length">
+          {{ perfil.nome + ',' }}
+        </ng-container>
+      </ng-container>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="ações">
+    <th mat-header-cell *matHeaderCellDef> Ações </th>
+    <td mat-cell *matCellDef="let usuario">
+      <button mat-raised-button color="basic" class="editar" [disabled]="ehEdicao" (click)="editarUsuario(usuario)">Editar</button>
+      <button mat-raised-button color="warn" [disabled]="ehEdicao" (click)="apagarUsuario(usuario.idUsuario)">Apagar</button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
