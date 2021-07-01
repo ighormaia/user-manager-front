@@ -3,7 +3,7 @@
 <form [formGroup]="form" class="form">
   <mat-form-field class="form-full-width" appearance="fill">
     <mat-label>Nome</mat-label>
-    <input matInput placeholder="Ex. Pizza" formControlName="nome" required>
+    <input matInput placeholder="Ex. Atendente" formControlName="nome" required>
   </mat-form-field>
 </form>
 
@@ -11,7 +11,7 @@
   <button mat-raised-button color="primary" [disabled]="desativarBotaoSalvar" (click)="adicionarCargo()">Adicionar</button>
 </ng-container>
 <ng-container *ngIf="ehEdicao">
-  <button mat-raised-button color="primary" (click)="alterarCargo()">Confirmar Edição</button>
+  <button mat-raised-button color="primary" class="editar" (click)="alterarCargo()">Confirmar Edição</button>
   <button mat-raised-button color="warn" (click)="cancelar()">Cancelar Edição</button>
 </ng-container>
 
@@ -22,7 +22,7 @@
     <td mat-cell *matCellDef="let cargo">{{ cargo.nome }}</td>
   </ng-container>
 
-  <ng-container matColumnDef="ações">
+  <ng-container matColumnDef="acoes">
     <th mat-header-cell *matHeaderCellDef> Ações </th>
     <td mat-cell *matCellDef="let cargo">
       <button mat-raised-button color="basic" class="editar" [disabled]="ehEdicao" (click)="editarCargo(cargo)">Editar</button>

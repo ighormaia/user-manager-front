@@ -3,27 +3,22 @@
 <form [formGroup]="form" class="form">
   <mat-form-field class="form-full-width" appearance="fill">
     <mat-label>Nome</mat-label>
-    <input matInput placeholder="Ex. Pizza" formControlName="nome" required>
+    <input matInput placeholder="Ex. Ighor" formControlName="nome" required>
   </mat-form-field>
 
   <mat-form-field class="form-full-width" appearance="fill">
     <mat-label>CPF</mat-label>
-    <input matInput placeholder="Ex. Pizza" formControlName="cpf" required>
+    <input matInput placeholder="Ex. 12322600610" formControlName="cpf" maxlength="11" required>
   </mat-form-field>
 
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" class="input">
     <mat-label>Selecione a Data de Nascimento</mat-label>
     <input matInput formControlName="dataNascimento" [matDatepicker]="picker">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
 
-  <mat-radio-group formControlName="sexo" aria-label="Selecione o sexo">
-    <mat-radio-button [value]="generoEnum.masculino">Masculino</mat-radio-button>
-    <mat-radio-button [value]="generoEnum.feminino">Feminino</mat-radio-button>
-  </mat-radio-group>
-
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" class="input">
     <mat-label>Selecione o Cargo</mat-label>
     <mat-select formControlName="cargo" required>
       <mat-option *ngFor="let cargo of listaCargos" [value]="cargo.idCargo" >
@@ -32,7 +27,7 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="fill" class="input">
     <mat-label>Selecione os Perfis</mat-label>
     <mat-select formControlName="perfis" multiple [compareWith]="compararObjetoSelect">
       <mat-option *ngFor="let perfil of listaPerfis" [value]="perfil">
@@ -40,13 +35,18 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+
+  <mat-radio-group formControlName="sexo" class="input" aria-label="Selecione o sexo">
+    <mat-radio-button class="radio-option" [value]="generoEnum.masculino">Masculino</mat-radio-button>
+    <mat-radio-button [value]="generoEnum.feminino">Feminino</mat-radio-button>
+  </mat-radio-group>
 </form>
 
 <ng-container *ngIf="!ehEdicao">
   <button mat-raised-button color="primary" [disabled]="desativarBotaoSalvar" (click)="adicionarUsuario()">Adicionar</button>
 </ng-container>
 <ng-container *ngIf="ehEdicao">
-  <button mat-raised-button color="primary" (click)="alterarUsuario()">Confirmar Edição</button>
+  <button mat-raised-button color="primary" class="editar" (click)="alterarUsuario()">Confirmar Edição</button>
   <button mat-raised-button color="warn" (click)="cancelar()">Cancelar Edição</button>
 </ng-container>
 

@@ -21,7 +21,7 @@ export class CargoComponent implements OnInit, OnDestroy {
 
   cargoSendoEditado: CargoData = new CargoData;
   form: FormGroup;
-  displayedColumns: string[] = ['nome', 'ações'];
+  displayedColumns: string[] = ['nome', 'acoes'];
   listaCargos: CargoData[] = [];
 
   constructor(
@@ -101,6 +101,7 @@ export class CargoComponent implements OnInit, OnDestroy {
           () => {
             this.listarCargos();
             this.cargoSendoEditado = new CargoData();
+            this.form.reset();
           },
           err => {
             this.exibirNotificacaoErro(err.message);

@@ -21,7 +21,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
 
   perfilSendoEditado: PerfilData = new PerfilData;
   form: FormGroup;
-  displayedColumns: string[] = ['nome', 'ações'];
+  displayedColumns: string[] = ['nome', 'acoes'];
   listaPerfis: PerfilData[] = [];
 
   constructor(
@@ -101,6 +101,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
           () => {
             this.listarPerfis();
             this.perfilSendoEditado = new PerfilData();
+            this.form.reset();
           },
           err => {
             this.exibirNotificacaoErro(err.message);

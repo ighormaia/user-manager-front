@@ -125,6 +125,7 @@ export class UsuarioComponent implements OnInit, OnDestroy {
           () => {
             this.listarUsuarios();
             this.usuarioSendoEditado = new UsuarioData();
+            this.form.reset();
           },
           err => {
             this.exibirNotificacaoErro(err.message);
