@@ -6,7 +6,7 @@ Requisitos:
  - NPM 7.18.1 ou superior
 
 
-Comandos para rodar a aplicação:
+Comandos para executar a aplicação:
 
 ### `npm install`
 Para instalar todas dependencias
