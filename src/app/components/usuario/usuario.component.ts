@@ -93,7 +93,6 @@ export class UsuarioComponent implements OnInit, OnDestroy {
     usuario.nome = this.form.get('nome')?.value;
     usuario.cpf = this.form.get('cpf')?.value;
     usuario.dataNascimento = this.form.get('dataNascimento')?.value;
-    usuario.dataCadastro = new Date();
     usuario.sexo = this.form.get('sexo')?.value;
     usuario.cargo = this.listaCargos.find(x => x.idCargo === this.form.get('cargo')?.value);
     usuario.perfis = this.form.get('perfis')?.value;
