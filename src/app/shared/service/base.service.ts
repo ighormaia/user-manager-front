@@ -11,8 +11,4 @@ export class BaseService {
       'Access-Control-Allow-Origin':'*'
     })
   };
-
-  extractData(res: Response) {
-    return res.json();
-  }
 }
